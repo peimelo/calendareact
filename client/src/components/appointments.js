@@ -70,6 +70,7 @@ export default class Appointments extends React.Component {
   render() {
     return(
       <div>
+        <h1>Calendar React</h1>
         <AppointmentForm
           title={this.state.title}
           appt_time={this.state.appt_time}
