@@ -1,0 +1,14 @@
+%h1 React Calendar
+
+%h2 Appointments
+
+= react_component('Appointments', props: {appointments: @appointments})
+
+
+<h1>Hello World</h1>
+<%= react_component("Appointments", props: {appointments: @appointments}, prerender: false) %>
+
+<%= react_component("HelloWorld", props: @hello_world_props, prerender: false) %>
+fff
+
+<%=  @hello_world_props[:name] %>
