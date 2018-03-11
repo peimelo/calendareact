@@ -25,7 +25,7 @@ class AppointmentForm extends React.Component {
     return(
       <div>
         <h2>Make a new appointment</h2>
-        <Label label={'Enter a title, date and time'}/>
+        <Label label="Enter a title, date and time" />
         <form onSubmit={(event) => this.handleSubmit(event)}>
           <input
             name="title"
