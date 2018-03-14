@@ -5,6 +5,7 @@ import Label from './label'
 
 export default class AppointmentForm extends React.Component {
   handleChange(e) {
+    console.log(e)
     const name = e.target.name;
     var obj = {};
     obj[name] = e.target.value;
@@ -17,9 +18,10 @@ export default class AppointmentForm extends React.Component {
   }
 
   setApptTime(e) {
+    console.log(e)
     const name = 'appt_time';
     var obj = {};
-    if (obj[name] === e.toDate()) {
+    if (obj[name] = e.toDate()) {
       this.props.onUserInput(obj);
     }
   }
