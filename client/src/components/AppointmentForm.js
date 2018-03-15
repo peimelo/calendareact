@@ -4,14 +4,29 @@ import Datetime from 'react-datetime';
 import moment from 'moment';
 
 import Label from './Label'
+import { validations } from '../utils/validations';
 
 import './react-datetime.css';
 
 class AppointmentForm extends React.Component {
+  static formValidations = {
+    title: [
+      (s) => validations.checkMinLength(s, 3),
+      (s) => validations.checkMaxLength(s, 250)
+    ],
+    appt_time: [
+      (t) => validations.timeShouldBeInTheFuture(t)
+    ]
+  };
+
   handleChange = (e) => {
     const fieldName = e.target.name;
     const filedValue = e.target.value;
-    this.props.onUserInput(fieldName, filedValue);
+    this.props.onUserInput(
+      fieldName,
+      filedValue,
+      AppointmentForm.formValidations[fieldName]
+    );
   };
 
   handleSubmit = (e) => {
@@ -22,7 +37,11 @@ class AppointmentForm extends React.Component {
   setApptTime = (e) => {
     const fieldName = 'appt_time';
     const filedValue = e.toDate();
-    this.props.onUserInput(fieldName, filedValue);
+    this.props.onUserInput(
+      fieldName,
+      filedValue,
+      AppointmentForm.formValidations[fieldName]
+    );
   };
 
   render() {
