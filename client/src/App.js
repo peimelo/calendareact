@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types'
 import update from 'immutability-helper';
 
@@ -53,7 +54,7 @@ class App extends React.Component {
       .catch((error) => {
         this.setState({formErrors: error.response.data})
       })
-  }
+  };
 
   handleUserInput = (obj) => {
     this.setState(obj, this.validateForm);
@@ -64,7 +65,11 @@ class App extends React.Component {
   }
 
   validateForm() {
-    this.setState({formValid: this.state.title.trim().length > 2})
+    this.setState({
+      formValid: this.state.title.trim().length > 2 &&
+        moment(this.state.appt_time).isValid() &&
+        moment(this.state.appt_time).isAfter()
+    })
   }
 
   render() {
