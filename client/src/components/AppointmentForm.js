@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 
@@ -6,12 +7,11 @@ import Label from './Label'
 
 import './react-datetime.css';
 
-export default class AppointmentForm extends React.Component {
+class AppointmentForm extends React.Component {
   handleChange = (e) => {
-    const name = e.target.name;
-    var obj = {};
-    obj[name] = e.target.value;
-    this.props.onUserInput(obj);
+    const fieldName = e.target.name;
+    const filedValue = e.target.value;
+    this.props.onUserInput(fieldName, filedValue);
   };
 
   handleSubmit = (e) => {
@@ -20,14 +20,13 @@ export default class AppointmentForm extends React.Component {
   };
 
   setApptTime = (e) => {
-    const name = 'appt_time';
-    var obj = {};
-    if (obj[name] = e.toDate()) {
-      this.props.onUserInput(obj);
-    }
+    const fieldName = 'appt_time';
+    const filedValue = e.toDate();
+    this.props.onUserInput(fieldName, filedValue);
   };
 
   render() {
+    const { appt_time, formValid, title } = this.props;
     const inputProps = { name: 'appt_time' };
 
     return(
@@ -39,7 +38,7 @@ export default class AppointmentForm extends React.Component {
             name="title"
             placeholder="Appointment Title"
             type="text"
-            value={this.props.title}
+            value={title}
             onChange={this.handleChange}
           />
 
@@ -47,7 +46,7 @@ export default class AppointmentForm extends React.Component {
             input={false}
             open={true}
             inputProps={inputProps}
-            value={moment(this.props.appt_time)}
+            value={moment(appt_time)}
             onChange={this.setApptTime}
           />
 
@@ -55,10 +54,20 @@ export default class AppointmentForm extends React.Component {
             type="submit"
             value="Make Appointment"
             className="submit-button"
-            disabled={!this.props.formValid}
+            disabled={!formValid}
           />
         </form>
       </div>
     )
   }
 }
+
+AppointmentForm.propTypes = {
+  appt_time: PropTypes.instanceOf(Date).isRequired,
+  formValid: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
+  onUserInput: PropTypes.func.isRequired
+};
+
+export default AppointmentForm;
