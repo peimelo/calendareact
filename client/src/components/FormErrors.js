@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const FormErrors = ({ formErrors }) =>
   <div>
@@ -11,4 +12,8 @@ export const FormErrors = ({ formErrors }) =>
         })
       )
     })}
-  </div>
+  </div>;
+
+FormErrors.propTypes = {
+  formErrors: PropTypes.object.isRequired
+};

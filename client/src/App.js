@@ -8,16 +8,13 @@ import { FormErrors } from './components/FormErrors'
 import * as API from './utils/API'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      appointments: [],
-      title: { value: '', valid: false },
-      appt_time: { value: moment().toDate(), valid: false },
-      formErrors: {},
-      formValid: false
-    };
-  }
+  state = {
+    appointments: [],
+    title: { value: '', valid: false },
+    appt_time: { value: moment().toDate(), valid: false },
+    formErrors: {},
+    formValid: false
+  };
 
   componentDidMount() {
     API.get().then((appointments) => this.setState({appointments}))
@@ -98,9 +95,9 @@ class App extends React.Component {
         <h1>Calendar React</h1>
         <FormErrors formErrors={this.state.formErrors} />
         <AppointmentForm
-          appt_time={this.state.appt_time.value}
+          appt_time={this.state.appt_time}
           formValid={this.state.formValid}
-          title={this.state.title.value}
+          title={this.state.title}
           onFormSubmit={this.handleFormSubmit}
           onUserInput={this.handleUserInput}
         />
