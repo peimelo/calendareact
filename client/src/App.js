@@ -1,27 +1,87 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import PropTypes from 'prop-types'
+import update from 'immutability-helper';
 
-class App extends Component {
-  componentDidMount() {
-    const api = 'http://localhost:3001';
+import AppointmentForm from './components/AppointmentForm'
+import AppointmentsList from './components/AppointmentsList'
+import { FormErrors } from './components/FormErrors'
+import * as API from './utils/API'
 
-    fetch(`${api}/appointments`)
-      .then(res => res.json())
-      .then(data => console.log(data))
+class App extends React.Component {
+  static propTypes = {
+    appointments: PropTypes.array.isRequired
+  };
+
+  static defaultProps = {
+    appointments: []
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      appointments: this.props.appointments,
+      title: '',
+      appt_time: '',
+      formErrors: {},
+      formValid: false
+    };
   }
+
+  componentDidMount() {
+    API.get().then((appointments) => this.setState({appointments}))
+  }
+
+  addNewAppointment(appointment) {
+    const appointments = update(this.state.appointments,
+      { $push: [appointment]});
+
+    this.setState({
+      appointments: appointments.sort(function(a,b){
+        return new Date(a.appt_time) - new Date(b.appt_time);
+      })
+    });
+  }
+
+  handleFormSubmit = () => {
+    const appointment = {title: this.state.title, appt_time: this.state.appt_time};
+
+    API.create(appointment)
+      .then((data) => {
+        this.addNewAppointment(data);
+        this.resetFormErrors()
+      })
+      .catch((error) => {
+        this.setState({formErrors: error.response.data})
+      })
+  }
+
+  handleUserInput = (obj) => {
+    this.setState(obj, this.validateForm);
+  };
+
+  resetFormErrors() {
+    this.setState({formErrors: {}})
+  }
+
+  validateForm() {
+    this.setState({formValid: this.state.title.trim().length > 2})
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+    return(
+      <div>
+        <h1>Calendar React</h1>
+        <FormErrors formErrors={this.state.formErrors} />
+        <AppointmentForm
+          appt_time={this.state.appt_time}
+          formValid={this.state.formValid}
+          title={this.state.title}
+          onFormSubmit={this.handleFormSubmit}
+          onUserInput={this.handleUserInput}
+        />
+        <AppointmentsList appointments={this.state.appointments} />
       </div>
-    );
+    )
   }
 }
 

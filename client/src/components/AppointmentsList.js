@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Appointment } from './appointment'
+import { Appointment } from './Appointment'
 
 function AppointmentsList({ appointments }) {
   return (
