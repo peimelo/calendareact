@@ -43,9 +43,6 @@ class AppointmentsController < ApplicationController
 
   private
   def appointment_params
-    p "---------------"
-    p params
-    p "---------------"
     params.require(:appointment).permit(:title, :appt_time)
   end
 end
