@@ -35,3 +35,4 @@ node_modules
 # Generated js bundles
 /public/webpack/*
 .idea/
+.DS_Store

@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3001",
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap": "^4.0.0",
     "immutability-helper": "^2.6.6",
     "moment": "^2.21.0",
     "prop-types": "^15.6.1",
@@ -12,7 +13,8 @@
     "react-datetime": "^2.14.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "reactstrap": "^5.0.0-beta.2"
   },
   "scripts": {
     "start": "react-scripts start",

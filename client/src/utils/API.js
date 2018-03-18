@@ -1,29 +1,35 @@
 import axios from 'axios';
 
-const api = process.env.REACT_APP_CONTACTS_API_URL || ''
+const api = process.env.REACT_APP_CONTACTS_API_URL || '';
 const headers = {
   'Accept': 'application/json',
 };
 
 export const getAll = () =>
   axios({
-    method: 'get',
+    method: 'GET',
     url: `${api}/appointments`,
-    headers
+    headers: {
+      ...headers,
+      ...JSON.parse(sessionStorage.getItem('user'))
+    }
   })
     .then(res => res.data);
 
 export const getById = (id) =>
   axios({
-    method: 'get',
+    method: 'GET',
     url: `${api}/appointments/${id}`,
-    headers
+    headers: {
+      ...headers,
+      ...JSON.parse(sessionStorage.getItem('user'))
+    }
   })
     .then(res => res.data);
 
 export const create = (body) =>
   axios({
-    method: 'post',
+    method: 'POST',
     url: `${api}/appointments`,
     responseType: 'json',
     data: JSON.stringify({
@@ -31,6 +37,7 @@ export const create = (body) =>
     }),
     headers: {
       ...headers,
+      ...JSON.parse(sessionStorage.getItem('user')),
       'Content-Type': 'application/json'
     }
   })
@@ -38,9 +45,12 @@ export const create = (body) =>
 
 export const destroy = (id) =>
   axios({
-    method: 'delete',
+    method: 'DELETE',
     url: `${api}/appointments/${id}`,
-    headers
+    headers: {
+      ...headers,
+      ...JSON.parse(sessionStorage.getItem('user'))
+    }
   })
     .then(res => res.data);
 
@@ -54,6 +64,7 @@ export const update = (id, body) =>
     }),
     headers: {
       ...headers,
+      ...JSON.parse(sessionStorage.getItem('user')),
       'Content-Type': 'application/json'
     }
   })
