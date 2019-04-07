@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 import update from 'immutability-helper';
+import { Container } from 'reactstrap';
 
 import { FormErrors } from './FormErrors'
 import Label from './Label'
@@ -159,7 +160,7 @@ class AppointmentForm extends React.Component {
     const inputProps = { name: 'appt_time' };
 
     return (
-      <div>
+      <Container>
         <h2>
           { this.state.editing ?
             'Update appointment' :
@@ -200,7 +201,7 @@ class AppointmentForm extends React.Component {
             </button>
           </p>
         )}
-      </div>
+      </Container>
     )
   }
 }

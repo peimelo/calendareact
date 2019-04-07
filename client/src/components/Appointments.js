@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
+import { Container } from 'reactstrap';
 
 import AppointmentForm from './AppointmentForm'
 import AppointmentsList from './AppointmentsList'
@@ -12,26 +13,26 @@ class Appointments extends Component {
 
   componentDidMount() {
     API.getAll()
-      .then((appointments) => this.setState({appointments}))
+      .then((appointments) => this.setState({ appointments }))
   }
 
   addNewAppointment = (appointment) => {
     const appointments = update(this.state.appointments,
-      { $push: [appointment]});
+      { $push: [appointment] });
 
     this.setState({
-      appointments: appointments.sort(function(a,b){
+      appointments: appointments.sort(function (a, b) {
         return new Date(a.appt_time) - new Date(b.appt_time);
       })
     });
   };
 
   render() {
-    return(
-      <div>
+    return (
+      <Container>
         <AppointmentForm handleNewAppointment={this.addNewAppointment} />
         <AppointmentsList appointments={this.state.appointments} />
-      </div>
+      </Container>
     )
   }
 }

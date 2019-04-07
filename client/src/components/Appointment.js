@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Container } from 'reactstrap';
 
 import { formatDate } from '../utils/format';
 import * as API from '../utils/API';
@@ -24,7 +25,7 @@ class Appointment extends Component {
     const { appointment } = this.state;
 
     return (
-      <div className="appointment">
+      <Container>
         <Link to={`/appointments/${appointment.id}`}>
           <h3>{appointment.title}</h3>
         </Link>
@@ -32,7 +33,7 @@ class Appointment extends Component {
         <Link to={`/appointments/${appointment.id}/edit`}>
           Edit
         </Link>
-      </div>
+      </Container>
     )
   }
 }
